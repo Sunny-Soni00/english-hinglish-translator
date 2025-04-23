@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain, Circuit, Database, Link, Network, Rocket } from "lucide-react";
+import { Brain, Cpu, Database, Link, Network, Rocket } from "lucide-react";
 
 export function FuturePlans() {
   const plans = [
@@ -25,7 +25,7 @@ export function FuturePlans() {
     {
       title: "Fine-tune Transformer Models",
       description: "Explore performance improvements by fine-tuning pre-trained transformer models like mT5 or MBart.",
-      icon: <Circuit className="h-10 w-10" />,
+      icon: <Cpu className="h-10 w-10" />,
       timeline: "Medium-term",
     },
     {
