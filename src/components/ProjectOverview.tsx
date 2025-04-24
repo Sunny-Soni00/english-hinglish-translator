@@ -1,7 +1,8 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain, Code, Database, Link as LinkIcon, Rocket } from "lucide-react";
-import { TranslationDemo } from "./TranslationDemo";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Brain, Code, Database, Rocket } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export function ProjectOverview() {
   const tools = [
@@ -19,27 +20,31 @@ export function ProjectOverview() {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle>Goal</CardTitle>
+              <CardTitle>Environment Setup</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
-                To translate conversational English sentences into Hinglish using deep learning,
-                creating a natural-sounding hybrid language that combines English vocabulary with
-                Hindi grammar and expressions.
-              </p>
+              <pre className="code-block">
+{`!pip install tensorflow wget
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import LSTM, Dense, Embedding`}
+              </pre>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader>
-              <CardTitle>Why It's Important</CardTitle>
+              <CardTitle>Key Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                <li>Helps in building smart chatbots for Indian users</li>
-                <li>Enables creation of regional virtual assistants</li>
-                <li>Supports the development of Hinglish-based applications</li>
-                <li>Bridges communication gaps between English and Hindi speakers</li>
+                <li>Bidirectional LSTM for context-aware encoding</li>
+                <li>GloVe Embeddings (200D) for English text</li>
+                <li>Teacher Forcing during training</li>
+                <li>Beam Search implementation for decoding</li>
               </ul>
             </CardContent>
           </Card>
@@ -65,8 +70,42 @@ export function ProjectOverview() {
         </div>
         
         <div>
-          <h3 className="text-xl font-medium mb-4">Try It Out</h3>
-          <TranslationDemo />
+          <Card>
+            <CardHeader>
+              <CardTitle>Performance Metrics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="py-2 px-4 text-left">Metric</th>
+                    <th className="py-2 px-4 text-left">Training</th>
+                    <th className="py-2 px-4 text-left">Validation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-2 px-4">Accuracy</td>
+                    <td className="py-2 px-4 font-medium text-primary">93.20%</td>
+                    <td className="py-2 px-4 font-medium text-primary">92.80%</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">Loss</td>
+                    <td className="py-2 px-4">0.3036</td>
+                    <td className="py-2 px-4">0.3685</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div className="mt-8 text-center">
+                <Link to="/translator">
+                  <Button size="lg">
+                    Try the Translator
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

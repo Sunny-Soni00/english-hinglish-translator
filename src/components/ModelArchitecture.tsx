@@ -1,75 +1,27 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function ModelArchitecture() {
   const architectureDetails = [
-    { name: "Model Type", value: "Sequence-to-sequence with LSTM encoder-decoder" },
-    { name: "Tokenization", value: "SentencePiece BPE (vocab size: 16,000 each)" },
-    { name: "Embedding Size", value: "256 dimensions" },
-    { name: "Training Method", value: "Teacher forcing" },
-    { name: "Max Input Length", value: "English (16 tokens), Hinglish (18 tokens)" },
-    { name: "Special Tokens", value: "Padding, Beginning of Sequence, End of Sequence" },
+    { name: "Embedding Dimension", value: "200" },
+    { name: "Latent Dimension", value: "400" },
+    { name: "Max Sequence Length", value: "50" },
+    { name: "Max Vocabulary Size", value: "40000" },
   ];
 
-  const modelCode = `# Define the Seq2Seq model with LSTM encoder-decoder
-def build_model(units, embedding_dim, vocab_size_en, vocab_size_hi):
-    # Encoder
-    encoder_inputs = Input(shape=(None,))
-    encoder_emb = Embedding(vocab_size_en, embedding_dim)(encoder_inputs)
-    encoder_lstm = LSTM(units, return_state=True)
-    encoder_outputs, state_h, state_c = encoder_lstm(encoder_emb)
-    encoder_states = [state_h, state_c]
-    
-    # Decoder
-    decoder_inputs = Input(shape=(None,))
-    decoder_emb = Embedding(vocab_size_hi, embedding_dim)
-    decoder_lstm = LSTM(units, return_sequences=True, return_state=True)
-    decoder_outputs, _, _ = decoder_lstm(
-        decoder_emb(decoder_inputs), initial_state=encoder_states
-    )
-    decoder_dense = Dense(vocab_size_hi, activation='softmax')
-    decoder_outputs = decoder_dense(decoder_outputs)
-    
-    # Create the model
-    model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
-    
-    return model`;
+  const modelCode = `# Encoder
+encoder_input = Input(shape=(max_seq_len,))
+encoder_embedding = Embedding(num_words, Embedding_dim, weights=[word_embedding], trainable=False)
+encoder_lstm = LSTM(Latent_dim, return_state=True)
+encoder_output, state_h, state_c = encoder_lstm(encoder_embedding(encoder_input))
 
-  const tokenizationCode = `# Define SentencePiece tokenizers for English and Hinglish
-import sentencepiece as spm
-
-# Train English tokenizer
-spm.SentencePieceTrainer.train(
-    input='english_corpus.txt',
-    model_prefix='en_tokenizer',
-    vocab_size=16000,
-    character_coverage=1.0,
-    model_type='bpe',
-    pad_id=0,
-    unk_id=1,
-    bos_id=2,
-    eos_id=3
-)
-
-# Train Hinglish tokenizer
-spm.SentencePieceTrainer.train(
-    input='hinglish_corpus.txt',
-    model_prefix='hi_tokenizer',
-    vocab_size=16000,
-    character_coverage=0.9995,
-    model_type='bpe',
-    pad_id=0,
-    unk_id=1,
-    bos_id=2,
-    eos_id=3
-)
-
-# Load the trained tokenizers
-en_sp = spm.SentencePieceProcessor()
-hi_sp = spm.SentencePieceProcessor()
-en_sp.load('en_tokenizer.model')
-hi_sp.load('hi_tokenizer.model')`;
+# Decoder
+decoder_input = Input(shape=(max_seq_len,))
+decoder_embedding = Embedding(num_words_output, Embedding_dim)
+decoder_lstm = LSTM(Latent_dim, return_sequences=True, return_state=True)
+decoder_outputs, _, _ = decoder_lstm(decoder_embedding(decoder_input), 
+                               initial_state=[state_h, state_c])
+decoder_dense = Dense(num_words_output, activation='softmax')`;
 
   return (
     <section id="model" className="section-container">
@@ -149,7 +101,7 @@ hi_sp.load('hi_tokenizer.model')`;
         
         <Card>
           <CardHeader>
-            <CardTitle>Architecture Details</CardTitle>
+            <CardTitle>Hyperparameters</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
@@ -166,21 +118,10 @@ hi_sp.load('hi_tokenizer.model')`;
       
       <Card className="mt-8">
         <CardHeader>
-          <CardTitle>Implementation Details</CardTitle>
+          <CardTitle>Implementation</CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="model">
-            <TabsList className="mb-4">
-              <TabsTrigger value="model">Model Definition</TabsTrigger>
-              <TabsTrigger value="tokenization">Tokenization</TabsTrigger>
-            </TabsList>
-            <TabsContent value="model">
-              <pre className="code-block">{modelCode}</pre>
-            </TabsContent>
-            <TabsContent value="tokenization">
-              <pre className="code-block">{tokenizationCode}</pre>
-            </TabsContent>
-          </Tabs>
+          <pre className="code-block">{modelCode}</pre>
         </CardContent>
       </Card>
     </section>
