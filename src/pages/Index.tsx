@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Header } from "@/components/Header";
@@ -6,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { ProjectOverview } from "@/components/ProjectOverview";
 import { DatasetDetails } from "@/components/DatasetDetails";
 import { ModelArchitecture } from "@/components/ModelArchitecture";
+import { AlternativeApproach } from "@/components/AlternativeApproach";
 import { TrainingDetails } from "@/components/TrainingDetails";
 import { Evaluation } from "@/components/Evaluation";
 import { ApiAccess } from "@/components/ApiAccess";
@@ -14,7 +14,6 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  // Smooth scroll implementation for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -47,6 +46,7 @@ const Index = () => {
           <ProjectOverview />
           <DatasetDetails />
           <ModelArchitecture />
+          <AlternativeApproach />
           <TrainingDetails />
           <Evaluation />
           <ApiAccess />

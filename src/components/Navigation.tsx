@@ -13,7 +13,8 @@ export function Navigation() {
   const menuItems = [
     "Overview",
     "Dataset", 
-    "Model", 
+    "Model",
+    "Alternative",
     "Training", 
     "Evaluation", 
     "API", 
