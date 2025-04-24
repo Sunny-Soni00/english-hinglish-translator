@@ -9,7 +9,10 @@ import {
   BarChart2, 
   Code, 
   ArrowRight,
+  PanelLeftClose,
+  PanelLeft
 } from "lucide-react";
+import { Button } from "./ui/button";
 
 export function SideNav() {
   const [isOpen, setIsOpen] = useState(true);
@@ -28,16 +31,18 @@ export function SideNav() {
         <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'w-auto opacity-100' : 'w-0 opacity-0'}`}>
           <Link to="/" className="text-primary font-medium">English to Hinglish</Link>
         </div>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsOpen(!isOpen)}
           className="p-1 rounded-md hover:bg-muted"
         >
           {isOpen ? (
-            <ArrowRight className="h-5 w-5" />
+            <PanelLeftClose className="h-5 w-5" />
           ) : (
-            <ArrowRight className="h-5 w-5 rotate-180" />
+            <PanelLeft className="h-5 w-5" />
           )}
-        </button>
+        </Button>
       </div>
       
       <div className="flex-1 py-6">
@@ -56,18 +61,6 @@ export function SideNav() {
             </li>
           ))}
         </ul>
-        
-        <div className="px-3 mt-8">
-          <Link
-            to="/alternative-approach"
-            className={`flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90 transition-all`}
-          >
-            <Code className="h-5 w-5" />
-            <span className={`transition-all duration-300 ${isOpen ? 'opacity-100' : 'w-0 opacity-0'}`}>
-              Alternative Approach
-            </span>
-          </Link>
-        </div>
       </div>
     </div>
   );

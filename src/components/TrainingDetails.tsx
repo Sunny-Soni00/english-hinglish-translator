@@ -1,95 +1,99 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { Upload, Image } from "lucide-react";
+import { useState } from "react";
 
 export function TrainingDetails() {
-  // Training data from the provided information
-  const trainingData = [
-    { epoch: 1, trainLoss: 2.2175, trainAcc: 0.7872, valLoss: 0.8368, valAcc: 0.8620 },
-    // We don't have all the epochs data, but we have the final epoch
-    { epoch: 10, trainLoss: 0.3036, trainAcc: 0.9320, valLoss: 0.3685, valAcc: 0.9280 },
-  ];
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
-  // Model inference code
-  const inferenceCode = `def decode_sequence(input_seq):
-    # Encoder
-    states_value = encoder_model.predict(input_seq)
-    
-    # Decoder setup
-    target_seq = np.zeros((1, 1))
-    target_seq[0, 0] = word2idx_output['<sos>']
-    
-    decoded_sentence = []
-    for _ in range(max_seq_len):
-        output_tokens, h, c = decoder_model.predict([target_seq] + states_value)
-        sampled_token_index = np.argmax(output_tokens[0, -1, :])
-        
-        if sampled_token_index == word2idx_output['<eos>']:
-            break
-            
-        decoded_word = idx2word_output[sampled_token_index]
-        decoded_sentence.append(decoded_word)
-        
-        # Update states
-        target_seq = np.zeros((1, 1))
-        target_seq[0, 0] = sampled_token_index
-        states_value = [h, c]
-        
-    return ' '.join(decoded_sentence)`;
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setUploadedFiles(Array.from(event.target.files));
+    }
+  };
 
   return (
-    <section id="training" className="section-container bg-muted/30">
+    <section id="training" className="section-container">
       <h2 className="section-title">Training Details</h2>
       
       <div className="grid md:grid-cols-2 gap-8">
         <Card>
           <CardHeader>
-            <CardTitle>Training Process</CardTitle>
+            <CardTitle>Training Metrics</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="font-medium">Training Metrics:</div>
-              <p className="text-sm text-muted-foreground mb-4">
-                Epoch 1/10 - Loss: 2.2175 - Accuracy: 0.7872 - Val Loss: 0.8368 - Val Accuracy: 0.8620<br/>
-                Epoch 10/10 - Loss: 0.3036 - Accuracy: 0.9320 - Val Loss: 0.3685 - Val Accuracy: 0.9280
-              </p>
-              
-              <div className="font-medium">Learning Curves:</div>
-              <div className="h-80">
-                <p className="text-center text-muted-foreground italic mb-4">
-                  (Accuracy chart will be uploaded manually)
-                </p>
-                
-                <div className="border rounded-lg p-4 bg-background/50 h-[300px] flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-muted-foreground">Training & Validation Accuracy Chart</p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Please upload the chart image here
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <div className="font-medium">Final Results:</div>
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="text-left py-2">Metric</th>
+                    <th className="text-left py-2">Training</th>
+                    <th className="text-left py-2">Validation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Accuracy</td>
+                    <td className="text-primary">93.20%</td>
+                    <td className="text-primary">92.80%</td>
+                  </tr>
+                  <tr>
+                    <td>Loss</td>
+                    <td>0.3036</td>
+                    <td>0.3685</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader>
-            <CardTitle>Model Inference</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Upload className="h-5 w-5" />
+              Upload Training Charts
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="font-medium">Translation Function:</div>
-              <pre className="code-block">{inferenceCode}</pre>
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer flex flex-col items-center gap-2"
+                >
+                  <Image className="h-8 w-8 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">
+                    Click to upload training charts or graphs
+                  </p>
+                </label>
+              </div>
+              
+              {uploadedFiles.length > 0 && (
+                <div className="grid grid-cols-2 gap-4">
+                  {uploadedFiles.map((file, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`Upload ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                      <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-sm">{file.name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
