@@ -8,7 +8,6 @@ import {
   Activity, 
   BarChart2, 
   Code, 
-  ArrowRight,
   PanelLeftClose,
   PanelLeft
 } from "lucide-react";
@@ -20,7 +19,7 @@ export function SideNav() {
   const menuItems = [
     { icon: <LayoutDashboard className="h-5 w-5" />, label: "Project Overview", href: "#overview" },
     { icon: <Database className="h-5 w-5" />, label: "Dataset Details", href: "#dataset" },
-    { icon: <Layers className="h-5 w-5" />, label: "Model Architecture", href: "#model" },
+    { icon: <Layers className="h-5 w-5" />, label: "Unique Approach", href: "#unique-approach" },
     { icon: <Activity className="h-5 w-5" />, label: "Training", href: "#training" },
     { icon: <BarChart2 className="h-5 w-5" />, label: "Evaluation", href: "#evaluation" },
   ];

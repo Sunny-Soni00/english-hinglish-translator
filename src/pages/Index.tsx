@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ProjectOverview } from "@/components/ProjectOverview";
 import { DatasetDetails } from "@/components/DatasetDetails";
-import { ModelArchitecture } from "@/components/ModelArchitecture";
+import { UniqueApproach } from "@/components/UniqueApproach";
 import { TrainingDetails } from "@/components/TrainingDetails";
 import { Evaluation } from "@/components/Evaluation";
 import { FuturePlans } from "@/components/FuturePlans";
@@ -55,7 +55,7 @@ const Index = () => {
             </div>
             <ProjectOverview />
             <DatasetDetails />
-            <ModelArchitecture />
+            <UniqueApproach />
             <TrainingDetails />
             <Evaluation />
             <FuturePlans />

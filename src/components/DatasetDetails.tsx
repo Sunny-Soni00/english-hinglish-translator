@@ -48,6 +48,7 @@ export function DatasetDetails() {
             
             <div className="text-muted-foreground">
               <p>Shape: (189102, 2)</p>
+              <p>After cleaning shape: (160182, 2)</p>
             </div>
           </CardContent>
         </Card>

@@ -25,9 +25,9 @@ export function Hero() {
             variant="outline" 
             size="lg"
             className="animate-fade-in"
-            onClick={() => document.getElementById('model')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('unique-approach')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            See Model Architecture
+            Unique Approach
           </Button>
         </div>
         <div className="absolute bottom-8 left-0 right-0 flex justify-center animate-bounce">
