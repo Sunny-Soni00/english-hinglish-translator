@@ -81,11 +81,11 @@ export function TrainingDetails() {
               {uploadedFiles.length > 0 && (
                 <div className="grid grid-cols-2 gap-4">
                   {uploadedFiles.map((file, index) => (
-                    <div key={index} className="relative aspect-[4/3] group">
+                    <div key={index} className="relative group">
                       <img
                         src={URL.createObjectURL(file)}
                         alt={`Upload ${index + 1}`}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-32 object-cover rounded-lg"
                       />
                       <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="text-sm">{file.name}</span>

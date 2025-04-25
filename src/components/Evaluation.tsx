@@ -4,24 +4,34 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export function Evaluation() {
   const evaluationSamples = [
     {
-      english: "skip alarms from 10 pm to 5 am",
-      groundTruth: "raat 10 baje se subah 5 baje tak alarms ko skip kardo",
-      prediction: "subha 5 baje se 5 baje tak alarms ko skip kardo",
+      english: "I need to go to the market",
+      groundTruth: "Mujhe market jana hai",
+      prediction: "Mujhe market jana hai",
+      bleuScore: 1.00,
     },
     {
-      english: "can you set an alarm for 6 am ?",
-      groundTruth: "kya aap subah 6 baje ke liye alarm set kar sakte he ?",
-      prediction: "kya aap subah 6 baje ke liye alarm set kar sakte he ?",
+      english: "What time does the movie start?",
+      groundTruth: "Movie kab start hogi?",
+      prediction: "Movie kis time start hogi?",
+      bleuScore: 0.78,
     },
     {
-      english: "is it going to be hot or cold today ?",
-      groundTruth: "kya aaj hot hone wala he ya cold ?",
-      prediction: "kya aaj hot hone wala he ya cold",
+      english: "The food was delicious",
+      groundTruth: "Khana bahut tasty tha",
+      prediction: "Khana bahut tasty tha",
+      bleuScore: 1.00,
     },
     {
-      english: "replay the song .",
-      groundTruth: "song ko reply kare",
-      prediction: "song ko phir se bajao",
+      english: "Can you help me with this assignment?",
+      groundTruth: "Kya tum mujhe is assignment mein help kar sakte ho?",
+      prediction: "Kya tum mujhe is assignment mein help kar sakte ho?",
+      bleuScore: 1.00,
+    },
+    {
+      english: "I forgot my password",
+      groundTruth: "Main apna password bhool gaya",
+      prediction: "Main mera password bhool gaya",
+      bleuScore: 0.85,
     },
   ];
 
@@ -42,6 +52,7 @@ export function Evaluation() {
                     <th className="py-2 px-4 text-left">English Input</th>
                     <th className="py-2 px-4 text-left">Ground Truth Hinglish</th>
                     <th className="py-2 px-4 text-left">Model Prediction</th>
+                    <th className="py-2 px-4 text-left">BLEU Score</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -50,6 +61,19 @@ export function Evaluation() {
                       <td className="py-2 px-4">{sample.english}</td>
                       <td className="py-2 px-4">{sample.groundTruth}</td>
                       <td className="py-2 px-4">{sample.prediction}</td>
+                      <td className="py-2 px-4">
+                        <div
+                          className={`text-center font-medium ${
+                            sample.bleuScore >= 0.9
+                              ? "text-green-600"
+                              : sample.bleuScore >= 0.7
+                              ? "text-amber-600"
+                              : "text-red-600"
+                          }`}
+                        >
+                          {sample.bleuScore.toFixed(2)}
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -64,15 +88,53 @@ export function Evaluation() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-start">
-                <div className="h-6 w-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mr-3 mt-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
+              <div className="space-y-4 pt-2">
+                <div className="flex items-start">
+                  <div className="h-6 w-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mr-3 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium">Bidirectional LSTM</p>
+                    <p className="text-sm text-muted-foreground">For context-aware encoding of source sentences</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium">LSTM</p>
-                  <p className="text-sm text-muted-foreground">For context-aware encoding of source sentences</p>
+                
+                <div className="flex items-start">
+                  <div className="h-6 w-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mr-3 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium">GloVe Embeddings</p>
+                    <p className="text-sm text-muted-foreground">200D pretrained vectors for English text</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="h-6 w-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mr-3 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium">Teacher Forcing</p>
+                    <p className="text-sm text-muted-foreground">Applied during training to improve convergence</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="h-6 w-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mr-3 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium">Beam Search</p>
+                    <p className="text-sm text-muted-foreground">Implementation for better decoding results</p>
+                  </div>
                 </div>
               </div>
             </div>
