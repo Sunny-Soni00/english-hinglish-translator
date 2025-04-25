@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tool, FileUp, MonitorCheck } from "lucide-react";
+import { Wrench, FileUp } from "lucide-react";
 
 export function ProjectOverview() {
   const tools = [
@@ -27,7 +27,7 @@ export function ProjectOverview() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Tool className="h-5 w-5" />
+              <Wrench className="h-5 w-5" />
               Tools and Libraries
             </CardTitle>
           </CardHeader>

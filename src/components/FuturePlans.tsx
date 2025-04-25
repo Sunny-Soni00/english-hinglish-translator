@@ -1,6 +1,5 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain, Cpu, Database, Link, Network, Rocket } from "lucide-react";
+import { Brain, Cpu, Database, Network } from "lucide-react";
 
 export function FuturePlans() {
   const plans = [
@@ -8,37 +7,21 @@ export function FuturePlans() {
       title: "Add Attention Mechanism",
       description: "Implement Bahdanau or Luong attention to improve translation quality for longer sentences.",
       icon: <Brain className="h-10 w-10" />,
-      timeline: "Short-term",
     },
     {
       title: "Convert to Chatbot",
       description: "Integrate with LangChain or Rasa to create a conversational agent that can chat in Hinglish.",
       icon: <Network className="h-10 w-10" />,
-      timeline: "Medium-term",
-    },
-    {
-      title: "Deploy on Hugging Face",
-      description: "Make the model publicly available through Hugging Face Spaces with a Gradio or Streamlit interface.",
-      icon: <Rocket className="h-10 w-10" />,
-      timeline: "Short-term",
     },
     {
       title: "Fine-tune Transformer Models",
       description: "Explore performance improvements by fine-tuning pre-trained transformer models like mT5 or MBart.",
       icon: <Cpu className="h-10 w-10" />,
-      timeline: "Medium-term",
     },
     {
       title: "Expand Dataset Coverage",
       description: "Collect and curate domain-specific English-Hinglish parallel data to improve specialized translations.",
       icon: <Database className="h-10 w-10" />,
-      timeline: "Long-term",
-    },
-    {
-      title: "Mobile SDK Integration",
-      description: "Create lightweight TensorFlow Lite versions for integration into Android and iOS applications.",
-      icon: <Link className="h-10 w-10" />,
-      timeline: "Long-term",
     },
   ];
 
@@ -46,7 +29,7 @@ export function FuturePlans() {
     <section id="future" className="section-container">
       <h2 className="section-title">Future Plans</h2>
       
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 gap-6">
         {plans.map((plan, index) => (
           <Card key={index} className="overflow-hidden border-t-4 border-t-primary transition-all hover:shadow-lg">
             <CardHeader className="pb-2">
@@ -54,10 +37,7 @@ export function FuturePlans() {
               <CardTitle>{plan.title}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">{plan.description}</p>
-              <div className="inline-block bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-xs font-medium">
-                {plan.timeline}
-              </div>
+              <p className="text-muted-foreground">{plan.description}</p>
             </CardContent>
           </Card>
         ))}
